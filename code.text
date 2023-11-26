@@ -1,0 +1,77 @@
+#include <BluetoothSerial.h>
+
+BluetoothSerial SerialBT;
+
+const int relayPins[] = {4, 5, 6, 7, 8, 9, 10, 11}; // Change the pin numbers based on your wiring
+
+void setup() {
+  Serial.begin(115200);
+  SerialBT.begin("ESP32_BT"); // Bluetooth device name
+
+  for (int i = 0; i < 8; i++) {
+    pinMode(relayPins[i], OUTPUT);
+    digitalWrite(relayPins[i], LOW); // Ensure that all relays are initially in the OFF state
+  }
+}
+
+void loop() {
+  if (SerialBT.available()) {
+    char command = SerialBT.read();
+    executeCommand(command);
+  }
+}
+
+void executeCommand(char command) {
+  switch (command) {
+    case '1':
+      digitalWrite(relayPins[0], !digitalRead(relayPins[0]));
+      break;
+    case '2':
+      digitalWrite(relayPins[1], !digitalRead(relayPins[1]));
+      break;
+    case '3':
+      digitalWrite(relayPins[2], !digitalRead(relayPins[2]));
+      break;
+    case '4':
+      digitalWrite(relayPins[3], !digitalRead(relayPins[3]));
+      break;
+    case '5':
+      digitalWrite(relayPins[4], !digitalRead(relayPins[4]));
+      break;
+    case '6':
+      digitalWrite(relayPins[5], !digitalRead(relayPins[5]));
+      break;
+    case '7':
+      digitalWrite(relayPins[6], !digitalRead(relayPins[6]));
+      break;
+    case '8':
+      digitalWrite(relayPins[7], !digitalRead(relayPins[7]));
+      break;
+    case '9':
+      digitalWrite(relayPins[0], LOW); // Turn off Relay 1
+      break;
+    case 'A':
+      digitalWrite(relayPins[1], LOW); // Turn off Relay 2
+      break;
+    case 'B':
+      digitalWrite(relayPins[2], LOW); // Turn off Relay 3
+      break;
+    case 'C':
+      digitalWrite(relayPins[3], LOW); // Turn off Relay 4
+      break;
+    case 'D':
+      digitalWrite(relayPins[4], LOW); // Turn off Relay 5
+      break;
+    case 'E':
+      digitalWrite(relayPins[5], LOW); // Turn off Relay 6
+      break;
+    case 'F':
+      digitalWrite(relayPins[6], LOW); // Turn off Relay 7
+      break;
+    case 'G':
+      digitalWrite(relayPins[7], LOW); // Turn off Relay 8
+      break;
+    default:
+      break;
+  }
+}
